@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import GraphView from '../views/GraphView.vue'
-import Heaven from '../views/Heaven.vue'
+import TableView from '../views/TableView.vue'
 import About from '../views/About.vue'
 
 Vue.use(VueRouter)
@@ -19,9 +19,9 @@ const routes = [
     component: GraphView
   },
   {
-    path: '/heaven',
-    name: 'Heaven',
-    component: Heaven
+    path: '/TableView',
+    name: 'TableView',
+    component: TableView
   },
   {
     path: '/about',

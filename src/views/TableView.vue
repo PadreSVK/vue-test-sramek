@@ -1,5 +1,5 @@
 <template>
-  <div class="heaven">
+  <div class="TableView">
     <h1>
         Data table of desserts
     </h1>

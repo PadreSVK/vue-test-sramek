@@ -7,7 +7,7 @@
     >
       <div class="d-flex align-center">
         <router-link :to="{name: 'Home'}" class="mylink" >Home</router-link>
-        <router-link :to="{ name: 'Heaven' }" class="mylink">Heaven</router-link>
+        <router-link :to="{ name: 'TableView' }" class="mylink">TableView</router-link>
         <router-link :to="{ name: 'GraphView' }" class="mylink">GraphView</router-link>
         <router-link :to="{ name: 'About' }" class="mylink">About</router-link> 
       </div>
