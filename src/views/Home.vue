@@ -1,26 +1,29 @@
 <template>
   <div class="home">
-    <HelloWorld />
+    <HelloWorld :myProp="prop" @myClick="test" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     HelloWorld,
-
   },
-  
+
   methods: {
-    test() {
-      console.log("test");
+    async test(obj) {
+      this.prop = {...obj, name: "Jozo"};
     },
   },
-}
+  data() {
+    return {
+      prop: { name: "Fero" },
+    };
+  },
+};
 </script>
 
