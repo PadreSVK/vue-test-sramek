@@ -1,17 +1,22 @@
 <template>
-    <div class="GraphView">
-        <h1>
-            GraphView
-        </h1>
-        <highcharts :options="chartOptions"></highcharts>
-    </div>
+  <div class="GraphView">
+    <h1>GraphView</h1>
+    <highcharts :options="chartOptions"></highcharts>
+
+    <v-btn @click="changeQuery">ChangeQuery</v-btn>
+
+    <v-text-field v-model="myText"></v-text-field>
+    <v-text-field v-model="person.name"></v-text-field>
+
+    {{ person.name | stringShortener(5)}}
+  </div>
 </template>
 <script>
-import {Chart} from 'highcharts-vue'
+import { Chart } from "highcharts-vue";
 
 export default {
   components: {
-    highcharts: Chart 
+    highcharts: Chart,
   },
   data() {
     var desserts = [
@@ -94,50 +99,107 @@ export default {
         carbs: 65,
         protein: 7,
         iron: "6%",
-      }
+      },
     ];
     return {
       chartOptions: {
-        yAxis: [{ // Primary yAxis
-          title: {
-            text: 'Calories',
-            
+        yAxis: [
+          {
+            // Primary yAxis
+            title: {
+              text: "Calories",
+            },
+            opposite: true,
           },
-          opposite: true
-        },
-        { // Secondary yAxis
-          gridLineWidth: 0,
-          title: {
-            text: 'Others',
+          {
+            // Secondary yAxis
+            gridLineWidth: 0,
+            title: {
+              text: "Others",
+            },
           },
-        }
         ],
+        chart: {
+          zoomType: "x",
+        },
+        credits: {
+          enabled: false,
+        },
 
-        series: [{
-            name:"Carbs",
-            yAxis:1,
-            data: desserts.map(d => [d.name, d.carbs])
+        series: [
+          {
+            name: "Carbs",
+            yAxis: 1,
+            data: desserts.map((d) => [d.name, d.carbs]),
+          },
+          {
+            name: "Protein",
+            yAxis: 1,
+            data: desserts.map((d) => [d.name, d.protein]),
+          },
+          {
+            name: "Fat",
+            yAxis: 1,
+            data: desserts.map((d) => [d.name, d.fat]),
+          },
+          {
+            name: "Calories",
+            type: "spline",
+            dashStyle: "shortdot",
+            yAxis: 0,
+            data: desserts.map((d) => [d.name, d.calories]),
+          },
+        ],
+        exporting: {
+          sourceWidth: 1920,
+          sourceHeight: 1080,
+          chartOptions: {
+            subtitle: null,
+          },
+          buttons: {
+            contextButton: {
+              menuItems: ["downloadPNG", "downloadPDF"],
+            },
+          },
         },
-        {
-            name:"Protein",
-            yAxis:1,
-            data: desserts.map(d => [d.name, d.protein])
-        },
-        {
-            name:"Fat",
-            yAxis:1,
-            data: desserts.map(d => [d.name, d.fat])
-        }, 
-        {
-            name:"Calories",
-            type: 'spline',
-            dashStyle: 'shortdot',
-            yAxis:0,
-            data: desserts.map(d => [d.name, d.calories])
-        },
-        ]
       },
-    }
-  }
-}
+      myText: "Init value",
+      person: {
+        name: "Jozo",
+        age: 30,
+      },
+    };
+  },
+  mounted() {
+    console.log("mounteed");
+  },
+  watch: {
+    $route(newVal, oldVal) {
+      console.log(newVal);
+      console.log(oldVal);
+    },
+    myText: {
+      handler(newVal) {
+        console.log(newVal);
+      },
+      immediate: true,
+    },
+    // person: {
+    //   handler(newVal) {
+    //     console.log(newVal);
+    //   },
+    //   immediate: true, // after component load
+    //   deep: true // watch also changes in object tree
+    // },
+    //specific property of object
+    "person.name"(newVal) {
+      console.log(newVal);
+    },
+  },
+  methods: {
+    changeQuery() {
+      this.$router.push({ query: { test: "BBBBB" } });
+    },
+  },
+};
 </script>
